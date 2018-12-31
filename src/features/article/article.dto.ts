@@ -22,7 +22,6 @@ export class GetArticleListDto {
 }
 
 export class GetArticleDto {
-  @Type(() => Number)
-  @IsNumber()
-  id: number;
+  @IsString()
+  hash: string;
 }

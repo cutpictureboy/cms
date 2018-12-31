@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Response<T> {
-  code: number;
+  statusCode: number;
   result: T;
 }
 
@@ -14,10 +14,12 @@ export class SuccessInterceptor<T> implements NestInterceptor<T, Response<T>> {
     call$: Observable<T>,
   ): Observable<Response<T>> {
     return call$.pipe(
-      map(result => ({
-        code: 200,
-        result,
-      })),
+      map(result => {
+        return ({
+          statusCode: 200,
+          result: result || null,
+        });
+      }),
     );
   }
 }

@@ -1,21 +1,9 @@
 import { Exclude } from 'class-transformer';
+import { Article } from 'entity/article.entity';
 
-export class ArticleVo {
-  readonly id: number;
-  readonly title: string;
-  readonly content: string;
-  readonly tag: string;
-
-  @Exclude()
-  readonly createAt: Date;
-
-  @Exclude()
-  readonly updateAt: Date;
-
-  @Exclude()
-  readonly version: number;
-
+export class ArticleVo extends Article {
   constructor(partial: Partial<ArticleVo>) {
+    super();
     Object.assign(this, partial);
   }
 }

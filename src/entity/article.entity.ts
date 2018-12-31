@@ -1,8 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Article {
 
+  @Exclude()
   @PrimaryGeneratedColumn({
     comment: '文章ID',
   })
@@ -12,6 +14,11 @@ export class Article {
     comment: '文章标题',
   })
   title: string;
+
+  @Column({
+    comment: '文章HASH值',
+  })
+  hash: string;
 
   @Column({
     type: 'longtext',
@@ -24,12 +31,24 @@ export class Article {
   })
   tag: string;
 
+  @Exclude()
+  @Column({
+    type: 'enum',
+    comment: '文章状态',
+    enum: ['draft', 'published'],
+    default: 'draft',
+  })
+  status: 'draft' | 'published';
+
+  @Exclude()
   @CreateDateColumn()
-  createAt;
+  createAt: Date;
 
+  @Exclude()
   @UpdateDateColumn()
-  updateAt;
+  updateAt: Date;
 
+  @Exclude()
   @VersionColumn()
-  version;
+  version: number;
 }

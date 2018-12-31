@@ -2,7 +2,6 @@ import {
   Injectable,
   NestInterceptor,
   ExecutionContext,
-  HttpStatus,
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common';
 import { Observable } from 'rxjs';
@@ -17,10 +16,7 @@ export class ErrorsInterceptor implements NestInterceptor {
   ): Observable<any> {
     return call$.pipe(
       catchError(err => {
-        return throwError(new HttpException({
-          code: err.message.statusCode,
-          message: err.message.message,
-        }, err.status));
+        return throwError(new HttpException(err.response, err.status));
       }),
     );
   }
